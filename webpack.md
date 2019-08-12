@@ -610,40 +610,40 @@ webpack
 			new CleanWebpackPlugin(["dist"]),	
 		]		
 		```
-* css 和 js 分离  mini-css-extract-plugin 生产环境 不支持HMR
-* css 压缩 optimize-css-assets-webpack-plugin 生产环境
-* 压缩js  npm i -D uglifyjs-webpack-plugin
-	* webpack4 --production 自动开启 
-* css-modules 和 引入全局样式和scss函数
-
-	```
-	安装scss		
-	{
-	  test: /\.scss$/,
-	  use: [
-	    {
-	      loader:'style-loader'
-	    }, {
-	      loader: 'css-loader'
-	    }, {
-	      loader: 'sass-loader'
-	    }, 
-	    {
-	      loader: 'sass-resources-loader',
-	      options: {
-	        resources: [
-	        	//全局scss 样式路径
-				path.join(""),
-				path.join("")
-	        ],
-	      }
-	    }
-	  ]
-	}
-	```
+	* css 和 js 分离  mini-css-extract-plugin 生产环境 不支持HMR
+	* css 压缩 optimize-css-assets-webpack-plugin 生产环境
+	* 压缩js  npm i -D uglifyjs-webpack-plugin
+		* webpack4 --production 自动开启 
+	* css-modules 和 引入全局样式和scss函数
 	
+		```
+		安装scss		
+		{
+		  test: /\.scss$/,
+		  use: [
+		    {
+		      loader:'style-loader'
+		    }, {
+		      loader: 'css-loader'
+		    }, {
+		      loader: 'sass-loader'
+		    }, 
+		    {
+		      loader: 'sass-resources-loader',
+		      options: {
+		        resources: [
+		        	//全局scss 样式路径
+					path.join(""),
+					path.join("")
+		        ],
+		      }
+		    }
+		  ]
+		}
+		```
+		
 * webpack配置合并
-
+	
 	```
  	 npm i -D webpack-merge
  	 webpack.common.js
@@ -651,9 +651,9 @@ webpack
  	 	module.exports = merger(webpack.common.js,webpack.dev.js)
  	 webpack.common.js
 	```
-	
+		
 * js 代码分割
-
+	
 	```
 	代码分割和webpack无关。webpack 提供代码分割功能
 	webpack.optimization.splitChunks

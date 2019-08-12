@@ -211,6 +211,42 @@
 		  }
 		}
 		```
+	* typscript TS语法转js
+
+		```
+		npm install --save webpack ts-loader
+		npm install --save-dev typescript 
+		
+		```
+		```ts.config
+		  {
+		    "compilerOptions": {
+		      "outDir": "./dist/",
+		      "sourceMap": true,
+		      "noImplicitAny": true,
+		      "module": "commonjs",
+		      "target": "es5", //导出对象模块标准
+		      "jsx": "react",
+		      "allowJs": true //是否容许js
+		    }
+		  }
+		```
+		
+		```webpack
+		rules: [
+	        {
+	          test: /\.tsx?$/,
+	          use: 'ts-loader',
+	          exclude: /node_modules/
+	        }
+	      ]
+      
+		resolve: {
+   		   extensions: [ '.tsx', '.ts', '.js' ]
+	    },
+		```
+		
+		
 		
 	* babel 编译JS  语法转换
 
