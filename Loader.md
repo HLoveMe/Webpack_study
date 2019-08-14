@@ -219,17 +219,34 @@
 		
 		```
 		```ts.config
-		  {
-		    "compilerOptions": {
-		      "outDir": "./dist/",
-		      "sourceMap": true,
-		      "noImplicitAny": true,
-		      "module": "commonjs",
-		      "target": "es5", //导出对象模块标准
+
+		{
+		  "compilerOptions": {
+
+		      "allowJs": true,
 		      "jsx": "react",
-		      "allowJs": true //是否容许js
-		    }
-		  }
+		      "outDir": "./dist",
+		      "sourceMap": false,
+		      "noImplicitAny": false,
+		      "module": "es6",
+		      "target": "es6",
+		      "watch": true,
+		      "types": [
+		          "react","react-native"
+		      ],
+		      "skipLibCheck": true,
+		      "moduleResolution":"node"
+		  },
+		  "include": [
+		      "typings/**/*.d.ts",
+		      "src/**/*.ts",
+		      "src/**/*.tsx",
+		      "*.tsx"
+		  ],
+		  "exclude": [
+		      "node_modules"
+		  ], 
+		}
 		```
 		
 		```webpack
