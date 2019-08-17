@@ -586,6 +586,59 @@ webpack
 * PWD 浏览器缓存
 	
 	[PWD](./Pwd.md)
+	
+* 请求代理 | 请求转发
+	
+	* DevServer 
+
+		[所有参数](https://github.com/chimurai/http-proxy-middleware#options)
+	
+		```proxy
+		devServer:{
+			proxy:{将/api请求转发到xx上
+				"/api":"http://www.x.com"
+				fetch("/api/address.json")					==>fetch("http://www.x.com/api/address.json")
+			}
+			proxy:{
+				changeOrigin: true//盗链问题
+				"/api":{
+					secure: false //https 加上
+					target:"http://www.x.com",
+					pathRewrite:{
+						"^/api":"" //url 替换
+					}
+					f("/api/address.json")==>"www.a.com/address.json"
+				}
+			}
+			proxy:{
+				bypass:f(){
+					拦截
+				}
+			}，
+			proxy:{//转发多个
+				content:["/api","/oldapi"],
+				target: 'http://localhost:3000',
+			}
+		}
+		
+		```
+* 单页面路由问题 [线上需要服务器配置]
+
+
+	[connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback)
+	
+	```
+	localhost:8080 ===> index.html
+	
+	localhost:8080/list ==> 浏览器会认为你在请求 /list 而不是localhost:8080的某个路由
+	
+	devServer:{
+		historyApiFallback: true
+		/list ==> 依然请求index.html  /list被当做路由的一部分 
+	}
+	
+	
+	```
 				
 * plugins
 	
