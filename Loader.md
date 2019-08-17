@@ -213,6 +213,8 @@
 		```
 	* typscript TS语法转js
 
+		[ts-dome](./ts-dome.zip)
+
 		```
 		npm install --save webpack ts-loader
 		npm install --save-dev typescript 
@@ -228,8 +230,8 @@
 		      "outDir": "./dist",
 		      "sourceMap": false,
 		      "noImplicitAny": false,
-		      "module": "es6",
-		      "target": "es6",
+		      "module": "es6",//编译之后的标准
+		      "target": "es6",//源文件标准 UMD amd es5 commonjs
 		      "watch": true,
 		      "types": [
 		          "react","react-native"
