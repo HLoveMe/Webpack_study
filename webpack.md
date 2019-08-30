@@ -829,3 +829,20 @@ webpack
 		],	
 	}正确
 	```
+	
+* Error error：Support for the experimental syntax 'classProperties' isn't currently enable
+* 类无法申明属性
+
+	```
+	class A(){
+		name= "" //这句话报错
+	}
+	
+	npm i -D @babel/plugin-proposal-class-properties
+	
+	.babelrc 或者 babel
+	
+	options:{
+		plugins: ['@babel/plugin-proposal-class-properties']
+	}
+	```
