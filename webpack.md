@@ -3,7 +3,7 @@ webpack
 
 * 介绍
   * 是一个模块打包工具
-  * 基于nodejs开发
+  * 基于nodejs开发ss
 
 * 模块说明
   * Es6模块
