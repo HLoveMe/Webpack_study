@@ -40,7 +40,19 @@
 		条件数组：至少一个匹配条件。
 		对象：匹配所有属性。每个属性都有一个定义行为。
 		```
-	
+	* 多loader 执行顺序
+
+		```scss 文件
+		scss==>css===>浏览器前缀===>style
+		从下往上 执行
+		use:[
+			"style-loader"
+			"css-loader"
+			"postcss-loader"
+			"sass-loader"
+		]	
+		
+		```
 * Loader
   
 	* file-loader 用于处理file文件
@@ -335,3 +347,26 @@
 			      }
 			    ]
 			  ]
+			  
+	* Bable JSX
+
+		```
+		
+		use:{
+			loader:"babel-loader",
+			options:{
+				presets:[
+					["@babel/preset-env",{
+						"corejs":2
+					}],
+					['@babel/preset-react',{
+						...
+					}]
+				]
+			}	
+			//或者.baelrc文件			
+			{
+			 "presets": ["env", "react"]
+			}
+		}
+		```
