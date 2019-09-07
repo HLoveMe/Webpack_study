@@ -142,7 +142,7 @@
 	* scss-loader
 
 		```
-		npm install sass-loader node-sass webpack --save-dev
+		npm install sass-loader node-sass --save-dev
 		
 		rules: [{
 	      test: /\.scss$/,
@@ -223,6 +223,9 @@
 		  }
 		}
 		```
+	* sass-resources-loader 解决导入公共scss 
+	 	
+	 	[见WebPack](./webpack.md)
 	* typscript TS语法转js
 
 		[ts-dome](./ts-dome.zip)
@@ -283,8 +286,9 @@
 
 		```
 		npm install --save-dev babel-loader @babel/core //核心 和 桥梁
-		npm install @babel-preset-env --save-dev //翻译规则
-			//useBuiltIns:"usage" 会自动引入补偿文件
+		npm install  @babel/preset-env --save-dev //翻译规则
+			
+		npm install -D core-js@2
 			
 		rules: [
 			{ 
@@ -304,8 +308,8 @@
 									chrome: "67",
 									ie: "11"
 								}
-								useBuiltIns: "usage",
-								"corejs": 2, //npm install -D core-js@2
+								useBuiltIns: "usage",//useBuiltIns:"usage" 会自动引入补偿文件
+								"corejs": 2,
 						}]],
 					},{
 						loader:"其他"
@@ -350,6 +354,7 @@
 			  
 	* Bable JSX
 
+		* npm i -D @babel/preset-react @babel/preset-env
 		```
 		
 		use:{

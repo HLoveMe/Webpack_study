@@ -373,8 +373,8 @@ webpack
 				optimization.splitChunks:{
 					chunks: "async", async 对异步代码打包 all 对所有代码生效
 				    minSize: 30000,//分割最小文件
-				    maxSize:10000,//最大的size >size 尝试再次分割
-				    minChunks: 1,//文件用到几次才进行分割
+				    maxSize:0,//最大的size > maxSize 尝试再次分割 可不配置
+				    minChunks: 3,//文件用到几次才进行分割
 				    maxAsyncRequests: 5,
 				    	//同时加载的模块数为5
 				    maxInitialRequests: 3,
@@ -384,10 +384,14 @@ webpack
 				    cacheGroups: {// 设置缓存组用来抽取满足不同规则的chunk
 				        vendors: { 
 				            test: /[\\/]node_modules[\\/]/
-				            priority: -10,//优先级，一个chunk很可能满足多个缓存组，会被抽取到优先级高的缓存组中
+				            	 //判断分割文件是否在npm库 如果符合 则放在vendors组下
+				            priority: -10,
+				            	//优先级，一个chunk很可能满足多个缓存组，会被抽取到优先级高的缓存组中
 				            
-				            //判断分割文件是否在npm库 如果符合 则放在vendors组下
-				            //分割为vendors~+导入该库文件名称
+				            dome:[打包出] vendors~+导入该库文件名称
+				            	"vendor~xx.js"  > 属于verdor组 + ~ + xx 入库文件名称
+				            
+				           
 				            //filename:"" 自定义名称 所有的都放在这个文件
 				        },
 					    default: {//如果该文件分割 不知道在哪个组 使用default配置
@@ -639,7 +643,30 @@ webpack
 	
 	
 	```
-				
+* 多页面打包
+
+	```
+	1:多入口
+		entry:{
+			app1:"../app1.js",
+			app2:"../../app2.js"
+		}				
+	2:多个模板
+		plugins:[
+			new HtmlWebpackPlugin({
+		      chunks: ["app1","runtime","vendors",....],
+		      filename: "index-101.html",
+		      title: "10.1活动",
+		      template: path.join(__dirname, "index.html")
+		    }),
+		    new HtmlWebpackPlugin({
+		      chunks: ["app2"],
+		      filename: "index-815.html",
+		      title: "index-815",
+		      template: path.join(__dirname, "index.html")
+		    }),
+		]
+	```
 * plugins
 	
 	* html-webpack-plugin
@@ -653,6 +680,7 @@ webpack
 		打包完成后 自动创建html文件 并引入js文件
 		配置
 			https://github.com/jantimon/html-webpack-plugin#configuration
+			
 		```	
 	* clean-webpack-plugin  打包之前删除输入文件夹目录
 		
@@ -663,7 +691,7 @@ webpack
 		
 		[
 			new CleanWebpackPlugin(),
-			new CleanWebpackPlugin(["dist"]),	
+			new CleanWebpackPlugin(["dist"]),
 		]		
 		```
 	* css 和 js 分离  mini-css-extract-plugin 生产环境 不支持HMR
@@ -795,7 +823,34 @@ webpack
 	```
 	见  webpack 和浏览器缓存
 	```
-	
+* 单独吧第三方库打包出
+
+	```
+	optimization.splitChunks.cacheGroups{
+		vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        react: {
+          test: /[\\/]node_modules[\\/](react)/,
+          priority: 0
+        },
+        react_dom: {
+          test: /[\\/]node_modules[\\/](react-dom)/,
+          priority: 0
+        },
+        rxjs: {
+          test: /[\\/]node_modules[\\/](rxjs)/,
+          priority: 0
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+	}
+	```
+		
 * polyfills 引入
 	
 	* 开发应用 见babel useBuiltIns:"usage"会自动增加补偿文件 推荐

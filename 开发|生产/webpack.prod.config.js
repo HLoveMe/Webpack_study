@@ -10,8 +10,8 @@ const prodConfig = {
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
-    filename: '[name].[contenthash].js',
-    chunkFilename: '[contenthash].chunk.js'
+    filename: 'js/[name].[contenthash].js',
+    chunkFilename: 'js/[contenthash].chunk.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,8 +20,8 @@ const prodConfig = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].chunk.css',
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[id].chunk.css',
     }),
   ],
   module: {
@@ -83,8 +83,8 @@ const prodConfig = {
     splitChunks: {
       chunks: "all",
       minSize: 30000,
-      maxSize: 100000,
-      minChunks: 1,
+      maxSize: 0,
+      minChunks: 2,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       automaticNameDelimiter: '~',
@@ -94,6 +94,18 @@ const prodConfig = {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
         },
+        // react: {
+        //   test: /[\\/]node_modules[\\/](react)/,
+        //   priority: 0
+        // },
+        // react_dom: {
+        //   test: /[\\/]node_modules[\\/](react-dom)/,
+        //   priority: 0
+        // },
+        // rxjs: {
+        //   test: /[\\/]node_modules[\\/](rxjs)/,
+        //   priority: 0
+        // },
         default: {
           minChunks: 2,
           priority: -20,
@@ -102,6 +114,5 @@ const prodConfig = {
       }
     }
   }
-}
 
 module.exports = merge(conCommon, prodConfig)
