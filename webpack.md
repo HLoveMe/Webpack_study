@@ -370,38 +370,50 @@ webpack
 
 			```
 			1:代码分割 (SplitChunksPlugin默认插件)
-				optimization.splitChunks:{
-					chunks: "async", async 对异步代码打包 all 对所有代码生效
-				    minSize: 30000,//分割最小文件
-				    maxSize:0,//最大的size > maxSize 尝试再次分割 可不配置
-				    minChunks: 3,//文件用到几次才进行分割
-				    maxAsyncRequests: 5,
-				    	//同时加载的模块数为5
-				    maxInitialRequests: 3,
-				    	//入口文件 加载的库 进行代码分割只能分割为3个
-				    automaticNameDelimiter: '~',
-				    name: true,
-				    cacheGroups: {// 设置缓存组用来抽取满足不同规则的chunk
-				        vendors: { 
-				            test: /[\\/]node_modules[\\/]/
-				            	 //判断分割文件是否在npm库 如果符合 则放在vendors组下
-				            priority: -10,
-				            	//优先级，一个chunk很可能满足多个缓存组，会被抽取到优先级高的缓存组中
-				            
-				            dome:[打包出] vendors~+导入该库文件名称
-				            	"vendor~xx.js"  > 属于verdor组 + ~ + xx 入库文件名称
-				            
-				           
-				            //filename:"" 自定义名称 所有的都放在这个文件
-				        },
-					    default: {//如果该文件分割 不知道在哪个组 使用default配置
-					            minChunks: 2,
-					            priority: -20,
+				optimization{
+					runtimeChunk:true
+					//runtime:连接模块化应用程序的所有代码.
+					//runtime包含:在模块交互时,连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑.
+					splitChunks:{
+						chunks: "async", async 对异步代码打包 all 对所有代码生效
+					    minSize: 30000,//分割最小文件
+					    maxSize:0,//最大的size > maxSize 尝试再次分割 可不配置
+					    minChunks: 3,//文件用到几次才进行分割
+					    maxAsyncRequests: 5,
+					    	//同时加载的模块数为5
+					    maxInitialRequests: 3,
+					    	//入口文件 加载的库 进行代码分割只能分割为3个
+					    automaticNameDelimiter: '~',
+					    name: true,
+					    cacheGroups: {// 设置缓存组用来抽取满足不同规则的chunk
+					        vendors: { 
+					            test: /[\\/]node_modules[\\/]/
+					            	 //判断分割文件是否在npm库 如果符合 则放在vendors组下
+					            priority: -10,
+					            	//优先级，一个chunk很可能满足多个缓存组，会被抽取到优先级高的缓存组中
+					            //name:""
+					            //filename:"[name].bundle.js" 自定义名称 所有[vendors]的都放在这个文件			
+					   					//[name]默认为"vendors"(key值)
+					   					//name属性为修改[name]变量        		
+					        
+					            		
+					            minChunks:2
 					            reuseExistingChunk: true
-					            	//如果该chunk中引用了已经被抽取的chunk，直接引用该chunk，不会重复打包代码
-					            
+						            	//如果该chunk中引用了已经被抽取的chunk，直接引用该chunk，不会重复打包代码
+						         enforce:true
+						         	//忽略 min|maxSize maxAsyncRequests maxInitialRequests
+						         	//就是要独立js chunks
+					            //dome:[打包出] vendors~+导入该库文件名称
+					            	"vendor~xx.js"  > 属于verdor组 + ~ + xx 入库文件名称
+					        },
+						    default: {//如果该文件分割 不知道在哪个组 使用default配置
+						            minChunks: 2,
+						            priority: -20,
+						            
+						            
+						    }
 					    }
-				    }
+					}
 				}
 			
 			```
@@ -626,7 +638,7 @@ webpack
 		}
 		
 		```
-* 单页面路由问题 [线上需要服务器配置]
+* 单页面路由问题
 
 
 	[connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback)
@@ -634,7 +646,7 @@ webpack
 	```
 	localhost:8080 ===> index.html
 	
-	localhost:8080/list ==> 浏览器会认为你在请求 /list 而不是localhost:8080的某个路由
+	localhost:8080/list ==> 浏览器会认为你在请求 /list路径   而不是localhost:8080的某个路由
 	
 	devServer:{
 		historyApiFallback: true
@@ -642,8 +654,25 @@ webpack
 	}
 	
 	
+	线上：需要做路由对应转换配合
+	
 	```
-* 多页面打包
+	
+	```
+	react-router-dom 
+		import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+			使用 BrowserRouter 作为总路由   
+				:8286/login  
+				:8286/home
+			作为路由需要之上解决路由问题
+	
+		import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+			使用 HashRouter 作为总路由   
+			:8286/#/login 
+			:8286/#/home
+			没有 之上解决路由问题
+	```
+* 多页面打包 
 
 	```
 	1:多入口
@@ -654,18 +683,49 @@ webpack
 	2:多个模板
 		plugins:[
 			new HtmlWebpackPlugin({
-		      chunks: ["app1","runtime","vendors",....],
+		      chunks: [
+		      		"app1"
+		      		,"runtime~app1", //runtime 只有app1
+		      		,"vendors~app1~app2",....
+		      	],
 		      filename: "index-101.html",
 		      title: "10.1活动",
 		      template: path.join(__dirname, "index.html")
 		    }),
 		    new HtmlWebpackPlugin({
-		      chunks: ["app2"],
+		      chunks: [
+			      "app2"
+			      ,"runtime~app2", //runtime 只有app1
+		      		,"vendors~app1~app2",....
+		      ],
 		      filename: "index-815.html",
 		      title: "index-815",
 		      template: path.join(__dirname, "index.html")
 		    }),
 		]
+		
+	关于chunks
+		[
+			app1 是必须的 入口文件
+			"runtime~app1",//runtimeChunk:true
+			"vendors~app1",
+				optimization.cacheGroups.
+					vendors:{
+						test: /[\\/]node_modules[\\/]/,
+			          priority: -10,
+			          filename:"js/[name].bundle.js",
+					}
+				
+			"vendorsAAA",
+				optimization.cacheGroups.
+					vendors:{
+						test: /[\\/]node_modules[\\/]/,
+			          priority: -10,
+			          filename:"js/[name].bundle.js",
+			          name:"vendorsAAA"
+					}				
+		]
+			
 	```
 * plugins
 	
@@ -826,6 +886,7 @@ webpack
 * 单独吧第三方库打包出
 
 	```
+	//受限  maxAsyncRequests  maxInitialRequests  设置
 	optimization.splitChunks.cacheGroups{
 		vendors: {
           test: /[\\/]node_modules[\\/]/,

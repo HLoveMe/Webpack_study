@@ -27,6 +27,7 @@ const prodConfig = {
   module: {
     rules: [{
       test: /\.css$/,
+      exclude: /node_modules/,
       use: [
         {
           loader: MiniCssExtractPlugin.loader
@@ -49,6 +50,7 @@ const prodConfig = {
       ]
     }, {
       test: /\.scss$/,
+      exclude: /node_modules/,
       use: [
         {
           loader: MiniCssExtractPlugin.loader
