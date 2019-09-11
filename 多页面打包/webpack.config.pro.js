@@ -90,12 +90,10 @@ const ProWebP = {
           filename: "js/[name].bundle.js",
           name: "antd_mobile"
         },
-        common: {
+        default: {
           minChunks: 2,
           priority: -20,
           reuseExistingChunk: true,
-          // filename: "js/[name].bundle.js",
-          name: "common"
         }
       }
     }
