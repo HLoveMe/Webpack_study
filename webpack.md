@@ -304,7 +304,7 @@ webpack
 				[".json",".js",".jsx"] 
 				
 			如何解析第三方导入
-			mainFields
+			mainFields [d]
 				第三方pacack.json
 					{
 					  ...
@@ -434,115 +434,113 @@ webpack
 			```
 		
 			
-	* 实时更新
-		
-		```
-		编译实时刷新
-			1: "watch":"webpack --watch"
-			2: watch:true
-			
-		实时查看网页/运行
-			见 devServer
-		```	 
-	*  HMR
-
-		[React](https://github.com/gaearon/react-hot-loader)
-		
-		[Vue](https://github.com/vuejs/vue-loader)
-		
-		[Angular](https://github.com/gdi2290/angular-hmr)
-		
-		[其他](https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr)
-		
-	*  HMR 刷新部分代码（只刷新css样式文件 | 刷新某个js）
+* 实时更新
 	
-		开启(编译实时刷新 开启网页实时刷新)
-			
-		```
-		devServer:{
-			hot:true, //开启
-			hotOnly:true //hot刷新 不要刷新浏览器
-		}
-		//const webpack = require("webpack");
-		plugins:[
-			new webpack.HotModuleReplacementPlugin()
-		]	 
-		开启HMR后  HMR接口会保留在module.hot下
+	```
+	编译实时刷新
+		1: "watch":"webpack --watch"
+		2: watch:true
 		
-		1:css HMR 会实时刷新
-		2:js HMR 模块文件修改后 如何实时刷新页面
-			c.js
-				import a from "./a.js"	
-				import b from "./b.js"
-				a()
-				b()
-			
-				//如果b文件更新 c文件可能不会刷新
-				if(module.hot){
-					module.hot.accept("../b.js"|[],()=>{
-						在文件刷新后调用
-					})
-					//不接受该文件刷新处理
-					module.hot.decline("../b.js"|[])
-					
-					//当前模块更新后调用
-					module.hot.dispose  || removeDisposeHandler
-					
-					module.hot.status 获取当前状态
-						idle 该进程正在等待调用 check（见下文）
-						check 该进程正在检查以更新
-						prepare 该进程正在准备更新（例如，下载已更新的模块）
-						ready 此更新已准备并可用
-						dispose 该进程正在调用将被替换模块的 dispose 处理函数
-						apply 该进程正在调用 accept 处理函数，并重新执行自我接受(self-accepted)的模块
-						abort 更新已中止，但系统仍处于之前的状态
-						fail 更新已抛出异常，系统状态已被破坏
-					module.hot. addStatusHandler | removeStatusHandler
-						增加 移除状态改变监听
-					
-					module.hot.check
-					module.hot.apply
-				}
-			
-			
-		``` 
-	* Tree Shaking
+	实时查看网页/运行
+		见 devServer
+	```	 
+*  HMR
 
-		```
-		去除无用代码。仅仅支持ESModule 代码
-		development模式下
-			webpack={
-				optimization:{
-					usedExports:true //开启Tree
-				}
+	[React](https://github.com/gaearon/react-hot-loader)
+	
+	[Vue](https://github.com/vuejs/vue-loader)
+	
+	[Angular](https://github.com/gdi2290/angular-hmr)
+	
+	[其他](https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr)
+	
+*  HMR 刷新部分代码（只刷新css样式文件 | 刷新某个js）
+	
+	开启(编译实时刷新 开启网页实时刷新)
+		
+	```
+	devServer:{
+		hot:true, //开启
+		hotOnly:true //hot刷新 不要刷新浏览器
+	}
+	//const webpack = require("webpack");
+	plugins:[
+		new webpack.HotModuleReplacementPlugin()
+	]	 
+	开启HMR后  HMR接口会保留在module.hot下
+	
+	1:css HMR 会实时刷新
+	2:js HMR 模块文件修改后 如何实时刷新页面
+		c.js
+			import a from "./a.js"	
+			import b from "./b.js"
+			a()
+			b()
+		
+			//如果b文件更新 c文件可能不会刷新
+			if(module.hot){
+				module.hot.accept("../b.js"|[],()=>{
+					在文件刷新后调用
+				})
+				//不接受该文件刷新处理
+				module.hot.decline("../b.js"|[])
+				
+				//当前模块更新后调用
+				module.hot.dispose  || removeDisposeHandler
+				
+				module.hot.status 获取当前状态
+					idle 该进程正在等待调用 check（见下文）
+					check 该进程正在检查以更新
+					prepare 该进程正在准备更新（例如，下载已更新的模块）
+					ready 此更新已准备并可用
+					dispose 该进程正在调用将被替换模块的 dispose 处理函数
+					apply 该进程正在调用 accept 处理函数，并重新执行自我接受(self-accepted)的模块
+					abort 更新已中止，但系统仍处于之前的状态
+					fail 更新已抛出异常，系统状态已被破坏
+				module.hot. addStatusHandler | removeStatusHandler
+					增加 移除状态改变监听
+				
+				module.hot.check
+				module.hot.apply
 			}
-			package.json={
-				sideEffects:false，//不需要tree Shaking
-				sideEffects:[ //不需要tree Shaking
-					"$.css",
-					"$.scss"
-				]
-			}
-		production
-			webpack 不需要配置
-			package 需要配置
-			
-		存在的问题
-			一些文件导入,没有使用，但是代码是有用的。打包之后无该文件。
-				dome:  body{padding:0} 配置sideEffects
-		```	
-	* ES6 语法支持
+		
+		
+	``` 
+* Tree Shaking
 
-		* Babal   loader	
+	```
+	去除无用代码。仅仅支持ESModule 代码
+	development模式下
+		webpack={
+			optimization:{
+				usedExports:true //开启Tree
+			}
+		}
+		package.json={
+			sideEffects:false，//不需要tree Shaking
+			sideEffects:[ //不需要tree Shaking
+				"$.css",
+				"$.scss"
+			]
+		}
+	production
+		webpack 不需要配置
+		package 需要配置
+		
+	存在的问题
+		一些文件导入,没有使用，但是代码是有用的。打包之后无该文件。
+			dome:  body{padding:0} 配置sideEffects
+	```	
+		
 			 
-  	* Library [编译之后你的库 作为第三方库 提供使用](https://www.webpackjs.com/guides/author-libraries/#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-library)
+* Library [编译之后你的库 作为第三方库 提供使用](https://www.webpackjs.com/guides/author-libraries/#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-library)
   		
-  		```
-  		output:{
-  			library:"XXV",
-  			libraryTarget:"var"
-  		}
-  		```
+	```
+	output:{
+		library:"XXV",
+		libraryTarget:"var"
+	}
+	```
   	
 * [Loader](./Loader.md)
 
@@ -758,6 +756,11 @@ webpack
 			https://github.com/jantimon/html-webpack-plugin#configuration
 			
 		```	
+	* add-asset-html-webpack-plugin 
+		
+		```
+		往 html-webpack-plugin生成的html 中 。增加内容
+		```
 	* clean-webpack-plugin  打包之前删除输入文件夹目录
 		
 		```
