@@ -371,7 +371,13 @@ webpack
 			```
 			1:代码分割 (SplitChunksPlugin默认插件)
 				optimization{
-					runtimeChunk:true
+					runtimeChunk:
+						true ==>runtime~[name]
+						{
+							name:entrypoint => `runtime~${entrypoint.name}`
+						}
+						"single" 
+						"multiple"
 					//runtime:连接模块化应用程序的所有代码.
 					//runtime包含:在模块交互时,连接模块所需的加载和解析逻辑。包括浏览器中的已加载模块的连接，以及懒加载模块的执行逻辑.
 					splitChunks:{
@@ -394,7 +400,8 @@ webpack
 					            //name:""
 					            //filename:"[name].bundle.js" 自定义名称 所有[vendors]的都放在这个文件			
 					   					//[name]默认为"vendors"(key值)
-					   					//name属性为修改[name]变量        		
+					   					//name属性为修改[name]变量  
+					   					//替代output.chunkFilename      		
 					        
 					            		
 					            minChunks:2
@@ -685,8 +692,9 @@ webpack
 			new HtmlWebpackPlugin({
 		      chunks: [
 		      		"app1"
-		      		,"runtime~app1", //runtime 只有app1
-		      		,"vendors~app1~app2",....
+		      		,"runtime~name",指定runtime名字
+		      		,"vendors",指定各个分包名字"[name]"
+		      		。。。
 		      	],
 		      filename: "index-101.html",
 		      title: "10.1活动",
@@ -695,37 +703,26 @@ webpack
 		    new HtmlWebpackPlugin({
 		      chunks: [
 			      "app2"
-			      ,"runtime~app2", //runtime 只有app1
-		      		,"vendors~app1~app2",....
+			      ,"runtime~name",指定runtime名字
+		      		,"vendors",指定各个分包名字"[name]"
+		      		。。。
 		      ],
 		      filename: "index-815.html",
 		      title: "index-815",
 		      template: path.join(__dirname, "index.html")
 		    }),
 		]
-		
-	关于chunks
-		[
-			app1 是必须的 入口文件
-			"runtime~app1",//runtimeChunk:true
-			"vendors~app1",
-				optimization.cacheGroups.
-					vendors:{
-						test: /[\\/]node_modules[\\/]/,
-			          priority: -10,
-			          filename:"js/[name].bundle.js",
+	3:分包设置	
+		optimization{
+			runtimeChunk:",指定runtime名字",
+			splitChunks:{
+				cacheGroups:{
+					vendors:{  //提起公共代码
+						name:"vendors"//直接指定名称
 					}
-				
-			"vendorsAAA",
-				optimization.cacheGroups.
-					vendors:{
-						test: /[\\/]node_modules[\\/]/,
-			          priority: -10,
-			          filename:"js/[name].bundle.js",
-			          name:"vendorsAAA"
-					}				
-		]
-			
+				}
+			}
+		}		
 	```
 * plugins
 	
@@ -887,24 +884,27 @@ webpack
 
 	```
 	//受限  maxAsyncRequests  maxInitialRequests  设置
+	//enforce 属性解除限制
+	//如果是多页面打包 指定name 
 	optimization.splitChunks.cacheGroups{
 		vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
+          //name:"vendors"
+          enforce:true
         },
         react: {
           test: /[\\/]node_modules[\\/](react)/,
           priority: 0
-        },
-        react_dom: {
-          test: /[\\/]node_modules[\\/](react-dom)/,
-          priority: 0
+           //name:"react"
         },
         rxjs: {
           test: /[\\/]node_modules[\\/](rxjs)/,
           priority: 0
+          //name:"rxjs"
         },
-        default: {
+		common: {
+		 //name:"common"
           minChunks: 2,
           priority: -20,
           reuseExistingChunk: true
