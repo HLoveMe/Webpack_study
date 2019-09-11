@@ -53,7 +53,8 @@
 		]	
 		
 		```
-* Loader
+* Loader	
+	* worker-loader 为网页增加Worker[某些浏览器自带]
   
 	* file-loader 用于处理file文件
 

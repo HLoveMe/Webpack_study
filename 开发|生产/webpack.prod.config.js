@@ -10,8 +10,8 @@ const prodConfig = {
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
-    filename: 'js/[name].[contenthash].js',
-    chunkFilename: 'js/[contenthash].chunk.js'
+    filename: 'js/[name].[contenthash:8].js',
+    chunkFilename: 'js/[contenthash:8].chunk.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,8 +20,8 @@ const prodConfig = {
     }),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-      chunkFilename: 'css/[id].chunk.css',
+      filename: 'css/[name].[contenthash:8].css',
+      chunkFilename: 'css/[name].[id].[contenthash:8].chunk.css',
     }),
   ],
   module: {
@@ -98,15 +98,18 @@ const prodConfig = {
         },
         // react: {
         //   test: /[\\/]node_modules[\\/](react)/,
-        //   priority: 0
+        //   priority: 0,
+        //  name:"react"
         // },
         // react_dom: {
         //   test: /[\\/]node_modules[\\/](react-dom)/,
-        //   priority: 0
+        //   priority: 0,
+        //  name:"react"
         // },
         // rxjs: {
         //   test: /[\\/]node_modules[\\/](rxjs)/,
-        //   priority: 0
+        //   priority: 0,
+        //  name:"react"
         // },
         default: {
           minChunks: 2,
