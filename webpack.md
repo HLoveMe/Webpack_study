@@ -100,10 +100,14 @@ webpack
       				aa:'./index.js' 入口为index.js 打包输出为aaa.js
       			}
 	
-	          多次打包=>[多个文件] entry:{
+	          多入口=>[多个文件] entry:{
 	          		home:"index.js",  ===>打包输出文件叫做 home.js
 	          		hello:"xx.js"  ===>打包输出文件叫做 hello.js
-	          	}
+	          }          
+		          * 页面(html)会导入所有入口js文件
+		          * [多页面]处理 见 【多页面打包】
+	          
+	          
 	          
 	
 	          动态入口 entry:()=>xx
@@ -402,7 +406,8 @@ webpack
 					   					//[name]默认为"vendors"(key值)
 					   					//name属性为修改[name]变量  
 					   					//替代output.chunkFilename      		
-					        
+					        	 chunks:"all" 单独配置
+					            	这里替换splitChunks.chunks
 					            		
 					            minChunks:2
 					            reuseExistingChunk: true
@@ -418,6 +423,9 @@ webpack
 						            priority: -20,
 						            
 						            
+						    },
+						    styles:{
+						    	test:"
 						    }
 					    }
 					}
@@ -436,6 +444,16 @@ webpack
 		实时查看网页/运行
 			见 devServer
 		```	 
+	*  HMR
+
+		[React](https://github.com/gaearon/react-hot-loader)
+		
+		[Vue](https://github.com/vuejs/vue-loader)
+		
+		[Angular](https://github.com/gdi2290/angular-hmr)
+		
+		[其他](https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr)
+		
 	*  HMR 刷新部分代码（只刷新css样式文件 | 刷新某个js）
 	
 		开启(编译实时刷新 开启网页实时刷新)
@@ -679,6 +697,7 @@ webpack
 			:8286/#/home
 			没有 之上解决路由问题
 	```
+
 * 多页面打包 
 
 	```
