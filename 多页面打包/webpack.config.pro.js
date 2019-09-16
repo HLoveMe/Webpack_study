@@ -66,9 +66,9 @@ const ProWebP = {
       chunks: "all",
       minSize: 30000,
       maxSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 10,
-      maxInitialRequests: 10,
+      minChunks: 2,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {//分割文件 都要经过组 
@@ -81,14 +81,18 @@ const ProWebP = {
         react: {
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           priority: 0,
-          // filename: "js/[name].bundle.js",
-          name: "react"
+          filename: "js/[name].bundle.js",
+          name: "react",
+          minChunks: 1,
+          enforce:true
         },
         antd_mobile: {
           test: /[\\/]node_modules[\\/](antd-mobile)/,
           priority: 0,
           filename: "js/[name].bundle.js",
-          name: "antd_mobile"
+          name: "antd_mobile",
+          minChunks: 1,
+          enforce:true
         },
         default: {
           minChunks: 2,

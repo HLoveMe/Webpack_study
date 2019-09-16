@@ -913,17 +913,19 @@ webpack
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
           //name:"vendors"
-          enforce:true
+          
         },
         react: {
           test: /[\\/]node_modules[\\/](react)/,
           priority: 0
            //name:"react"
+           //enforce:true
         },
         rxjs: {
           test: /[\\/]node_modules[\\/](rxjs)/,
           priority: 0
           //name:"rxjs"
+          //enforce:true
         },
 		common: {
 		 //name:"common"

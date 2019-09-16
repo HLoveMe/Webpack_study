@@ -97,12 +97,7 @@ const prodConfig = {
           priority: -10,
         },
         // react: {
-        //   test: /[\\/]node_modules[\\/](react)/,
-        //   priority: 0,
-        //  name:"react"
-        // },
-        // react_dom: {
-        //   test: /[\\/]node_modules[\\/](react-dom)/,
+        //   test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
         //   priority: 0,
         //  name:"react"
         // },
