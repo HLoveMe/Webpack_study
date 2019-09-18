@@ -865,8 +865,8 @@ webpack
 	
 	解决
 		output:{
-			filename:'[name].[contenthash].js',
-			chunkfilename:'[name].[contenthash].[chunkhash].chunk.js'
+			filename:'[name].[chunkhash].js',
+			chunkfilename:'[name].[chunkhash].chunk.js'
 		}
 		
 	runtimeChunk

@@ -10,8 +10,8 @@ const ProWebP = {
   },
   output: {
     path: path.join(__dirname, "prod"),
-    filename: 'js/[name].[contenthash:8].js',
-    chunkFilename: 'js/[name].[contenthash:8].js'
+    filename: 'js/[name].[chunkhash:8].js',
+    chunkFilename: 'js/[name].[chunkhash:8].js'
   },
   module: {
     rules: [

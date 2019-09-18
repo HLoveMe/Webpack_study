@@ -10,8 +10,8 @@ const prodConfig = {
   mode: 'production',
   devtool: 'cheap-module-source-map',
   output: {
-    filename: 'js/[name].[contenthash:8].js',
-    chunkFilename: 'js/[contenthash:8].chunk.js'
+    filename: 'js/[name].[chunkhash:8].js',
+    chunkFilename: 'js/[chunkhash:8].chunk.js'
   },
   plugins: [
     new HtmlWebpackPlugin({
