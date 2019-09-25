@@ -26,9 +26,21 @@
 			
 			loader: (use:[{loader:"xxx"}])缩写
 			use:[] | "" 指定loader
-			oneOf:[Rule,{}] 适配规则 并使用某个loader
+			oneOf:[Rule,{}] 适配规则 并使用第一个匹配的loader
 			
-			parser:{} 
+			parser: {
+			  amd: false, // 禁用 AMD
+			  commonjs: false, // 禁用 CommonJS
+			  system: false, // 禁用 SystemJS
+			  harmony: false, // 禁用 ES2015 Harmony import/export
+			  requireInclude: false, // 禁用 require.include
+			  requireEnsure: false, // 禁用 require.ensure
+			  requireContext: false, // 禁用 require.context
+			  browserify: false, // 禁用特殊处理的 browserify bundle
+			  requireJs: false, // 禁用 requirejs.*
+			  node: false, // 禁用 __dirname, __filename, module, require.extensions, require.main 等。
+			  node: {...} // 在模块级别(module level)上重新配置 node 层(layer)
+			}
 		}
 		```
 	* 【条件】
@@ -37,7 +49,7 @@
 		字符串：匹配输入必须以提供的字符串开始。是的。目录绝对路径或文件绝对路径。
 		正则表达式：test 输入值。
 		函数：调用输入的函数，必须返回一个真值(truthy value)以匹配。
-		条件数组：至少一个匹配条件。
+		条件数组：【条件】至少一个匹配条件。
 		对象：匹配所有属性。每个属性都有一个定义行为。
 		```
 	* 多loader 执行顺序

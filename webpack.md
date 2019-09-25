@@ -120,7 +120,7 @@ webpack
 	          filename:"" 输出文件名 
 	          	如果entry为多次打包 可以使用展位符
 	          chunkFilename:"",
-	          	入口文件 进行代码分割chunk文件名称
+	          	入口文件 进行代码分割chunk文件名称[static/js/[name].[contenthash:8].chunk.js]
 	          path:__dirpath+"/output" 输出文件夹（默认为当前目录文件夹）
 	          
 	          
@@ -142,8 +142,7 @@ webpack
   		* externals 把内部对于第三方依赖 交给用户
   			
   			```
-  			
-  			
+  			某些库不需要webpack打包 而是手动通过scrpt导入
   			```
   		* devtools 控制是否生成，以及如何生成 source map
   			
