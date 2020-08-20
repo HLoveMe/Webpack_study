@@ -13,7 +13,7 @@
 		{
 			resourceQuery:/inline/ 【条件】
 				json文件
-				require("../a/b/regis.json?inline")
+				require("../a/b/regis.jsonx?inline")
 				
 			test:   匹配文件 【条件】
 			resource:匹配文件 【条件】
@@ -368,6 +368,7 @@
 	* Bable JSX
 
 		* npm i -D @babel/preset-react @babel/preset-env
+		
 		```
 		
 		use:{
