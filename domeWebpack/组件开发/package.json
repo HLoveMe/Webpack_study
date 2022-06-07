@@ -1,0 +1,40 @@
+{
+  "name": "commandflow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "tsc_node_build": "node ./build-pre.js 1 && tsc -p tsconfig.node.json",
+    "tsc_web": "node ./build-pre.js 0 && tsc -p tsconfig.web.json",
+    "build_web": "webpack --config webpack.config.dev.js",
+    "web_test": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HLoveMe/CommandFlow.git"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "rxjs": "^6.6.2",
+    "uuid": "^8.3.2"
+  },
+  "pack": {},
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HLoveMe/CommandFlow/issues"
+  },
+  "homepage": "https://github.com/HLoveMe/CommandFlow#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.12",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.3",
+    "core-js": "^3.22.8",
+    "less": "^4.1.2",
+    "terser-webpack-plugin": "^5.3.1",
+    "ts-loader": "^9.2.7",
+    "typescript": "^4.6.2",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
