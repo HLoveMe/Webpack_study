@@ -123,13 +123,19 @@ webpack
 	          	入口文件 进行代码分割chunk文件名称[static/js/[name].[contenthash:8].chunk.js]
 	          path:__dirpath+"/output" 输出文件夹（默认为当前目录文件夹）
 	          
-	          
-	          library:"JQuery" 如何处理入口文件导出的变量 赋值在JQuery
+	        创建自己的第三方库使用的参数
+
+	          library:"myTools" 如何处理入口文件导出的变量 赋值在JQuery
+							1:默认仅仅执行你的库文件（相当于执行了一个函数，不会导出任何数据）
+							2: 设置后会将执行的结果赋值到 ‘myTools’变量上
+							var myTools = require("库名")
+
 	          libraryTarget:"var" 入口文件导出的变量 作用做哪个作用域上
-	          	var 作为一个全局变量，通过 script 标签来访问（libraryTarget:'var'）。
-	          	this：通过 this 对象访问（libraryTarget:'this'）。
-	          	window：通过 window 对象访问，在浏览器中（libraryTarget:'window'）。
-	          	UMD：在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）。兼容性大
+                var 没有赋值操作，所以其他文件没法引用该对象。 配合library可导出
+                this：通过 this 对象访问（libraryTarget:'this'）。 this['library-value']= (func(){})
+                window：通过 window 对象访问，在浏览器中（libraryTarget:'window'）。 window['library-value']= (func(){})。
+                commonjs/commonjs2：通过 exports 对象访问，在 Node.js 中（libraryTarget:'commonjs'）。 exports['library-value']= (func(){})
+                umd：定义了兼容各种模块的执行函数 支持commonjs amd 等等,兼容性大
 						
 	           publicPath:"" 会添加到所有引用路径前 (相对加载的html页面路径)
 					publicPath: "/assets/", // 相对于服务(server-relative)
@@ -143,6 +149,18 @@ webpack
   			
   			```
   			某些库不需要webpack打包 而是手动通过scrpt导入
+				开发的库直接打包会把依赖的库打包进去 如：jquery lodash。
+				这个配置，打包后不包含依赖的第三方库，而是依赖使用我们库的项目中的依赖
+				{
+					jquery:"jquery",
+					lodash:{
+						commonjs:"lodash",
+						commonjs2:"lodash",
+						amd:"lodash",
+						root:"_"
+					}
+				}
+
   			```
   		* devtools 控制是否生成，以及如何生成 source map
   			
