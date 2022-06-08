@@ -49,7 +49,7 @@ module.exports = {
     // new webpack.HotModuleReplacementPlugin(),
   ],
   resolve: {
-    extensions: ['.json', '.js', '.jsx', 'ts', '.tsx'],
+    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
   },
   externals:{
     // axios:'axios',
