@@ -919,8 +919,11 @@ webpack
 	```
 	见  webpack 和浏览器缓存
 	```
-* 单独吧第三方库打包出 dome:CommonsChunkPlugin
+* 单独吧第三方库打包出 
 
+	```
+	dome:CommonsChunkPlugin J将第三方包单独打包为一个稳定（版本）的文件
+	```
 	```
 	//受限  maxAsyncRequests  maxInitialRequests  设置
 	//enforce 属性解除限制
@@ -953,11 +956,7 @@ webpack
 	}
 	```
 		
-* polyfills 引入
-	
-	* 开发应用 见babel useBuiltIns:"usage"会自动增加补偿文件 推荐
-	* 开发应用 main.js 直接引入import 'babel-polyfill';    不推荐
-	* 开发库  见 babel 编译JS
+* polyfills 引入 [基础](https://github.com/HLoveMe/HTML_CSS_JS/blob/master/JS%E6%9F%90%E4%BA%9B%E7%9F%A5%E8%AF%86/babel.md)
 
 * Error: options/query provided without loader (use loader + options) 问题
 

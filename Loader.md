@@ -347,10 +347,10 @@
 					}],
 				
 			}
-		如果开发的是第三方库
+		如果开发的是第三方库  Yes
 			npm install --save-dev @babel/plugin-transform-runtime
 			npm install --save @babel/runtime
-			npm install --save @babel/runtime-corejs2
+			npm install --save @babel/runtime-corejs2 / 3
 			options:{
 			  "plugins": [
 			    [
@@ -364,28 +364,3 @@
 			      }
 			    ]
 			  ]
-			  
-	* Bable JSX
-
-		* npm i -D @babel/preset-react @babel/preset-env
-		
-		```
-		
-		use:{
-			loader:"babel-loader",
-			options:{
-				presets:[
-					["@babel/preset-env",{
-						"corejs":2
-					}],
-					['@babel/preset-react',{
-						...
-					}]
-				]
-			}	
-			//或者.baelrc文件			
-			{
-			 "presets": ["env", "react"]
-			}
-		}
-		```
