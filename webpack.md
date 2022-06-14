@@ -919,7 +919,7 @@ webpack
 	```
 	见  webpack 和浏览器缓存
 	```
-* 单独吧第三方库打包出
+* 单独吧第三方库打包出 dome:CommonsChunkPlugin
 
 	```
 	//受限  maxAsyncRequests  maxInitialRequests  设置
