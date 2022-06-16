@@ -34,7 +34,7 @@
       module:"./index.js",
     }
     ```
-    * 详解 [GO](https://github.com/SunshowerC/blog/issues/8) And [同见](https://webpack.docschina.org/configuration/resolve/#resolvemainfields)
+    * 详解 [GO](https://github.com/SunshowerC/blog/issues/8)-[GO2](https://github.com/tianyn1990/blog/issues/1) And [同见](https://webpack.docschina.org/configuration/resolve/#resolvemainfields)
       ```
       "main": "lib/index.js",  // main 
       "module": "lib/index.mjs", // module
