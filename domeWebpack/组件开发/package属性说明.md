@@ -220,3 +220,29 @@
       },
     }
     ```
+
+  * bundleDependencies 捆绑指定的库 在你的库中
+    ```
+      flow-a 作为你开发的库
+      {
+        "bundleDependencies": [
+          "react",
+          "react-dom",
+        ]
+      }
+    =》某个项目安装你这个库
+      {
+        node_modules
+          flow-a
+            node_modules
+              react
+              react-dom
+      }
+    // 如果没有设置 或者为false
+      {
+        node_modules
+          flow-a
+          react
+          react-dom
+      }
+    ```
