@@ -192,8 +192,9 @@
       "module": "./dist/bbb/index.mjs"
     }
   ```
-  * dome 'uuid'
+  * dome 
     ```
+    //'uuid' 
      "exports": {
         ".": {
           "node": {
@@ -205,4 +206,17 @@
         },
         "./package.json": "./package.json"
       },
+    ```
+    ```
+    //vue
+    "exports": {
+      ".": {
+        "import": {
+          "node": "./index.mjs",
+          "default": "./dist/vue.runtime.esm-bundler.js"
+        },
+        "require": "./index.js",
+        "types": "./dist/vue.d.ts"
+      },
+    }
     ```
