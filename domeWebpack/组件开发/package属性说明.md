@@ -108,6 +108,7 @@
           选用 module
         ```
 * unpkg 
+* types 指定你的typescript 类型文件
 * files
   ```
   你的git 可能会包含很多测试文件或者dome
