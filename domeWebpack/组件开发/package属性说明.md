@@ -109,6 +109,28 @@
         ```
 * unpkg 
 * types 指定你的typescript 类型文件
+* bin
+  ```
+    @vue/cli-serve 
+    {
+      bin:{
+        "vue-cli-service": "bin/vue-cli-service.js"
+      }
+    }
+    就会在node_modules/.bin 创建可执行文件来执行"bin/vue-cli-service.js"
+    会出现三个可执行文件 
+      'vue-cli-service' unix 系默认的可执行文件
+      vue-cli-service.cmd cmd窗口执行文件
+      vue-cli-service.ps1  Windows PowerShell 
+  ``` 
+  ```
+    npm run serve ==>vue-cli-service serve  
+    1：会先在node_modules/.bin 中查找vue-cli-service
+    2：找不到 会在全局npm安装路径中查找vue-cli-service 
+    3：将会在系统环境变量中查找vue-cli-service 
+
+    这也是为啥不直接执行vue-cli-service serve 而是换成 npm run serve 来执行的原因。
+  ```
 * files
   ```
   你的git 可能会包含很多测试文件或者dome
