@@ -1,7 +1,7 @@
 const path = require('path');
 module.exports = {
   mode: 'development',
-  entry: path.join(__dirname, "dist", "index.js"),
+  entry:['babel-polyfill',path.join(__dirname, "dist", "index.js")] ,// 前者可选 全局插入补丁
   output: {
     path: path.join(__dirname, "cjs"),
     filename: 'pin.cjs.dev.js',
