@@ -244,28 +244,34 @@
     }
     ```
 
-  * bundleDependencies 捆绑指定的库 在你的库中
-    ```
-      flow-a 作为你开发的库
-      {
-        "bundleDependencies": [
-          "react",
-          "react-dom",
-        ]
-      }
-    =》某个项目安装你这个库
-      {
-        node_modules
-          flow-a
-            node_modules
-              react
-              react-dom
-      }
-    // 如果没有设置 或者为false
-      {
-        node_modules
-          flow-a
-          react
-          react-dom
-      }
-    ```
+* bundleDependencies 捆绑指定的库 在你的库中 （开发第三方库）
+  ```
+    flow-a 作为你开发的库
+    {
+      "bundleDependencies": [
+        "react",
+        "react-dom",
+      ]
+    }
+  =》某个项目安装你这个库
+    {
+      node_modules
+        flow-a
+          node_modules
+            react
+            react-dom
+    }
+  // 如果没有设置 或者为false
+    {
+      node_modules
+        flow-a
+        react
+        react-dom
+    }
+  ```
+* PeerDependencies（开发第三方库）
+  ```
+    bundleDependencies 强制绑定在库的node_moduels下
+    PeerDependencies 版本一致会安装在项目下。版本不一致会安装在这个库的node_modules。互相不冲突
+  ```
+* optionalDependencies 可选的 会安装，不会管是否安装成功
